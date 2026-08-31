@@ -1,0 +1,144 @@
+---
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description?: string;
+  canonical?: string;
+  ogType?: string;
+  ogImage?: string;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+  author?: string;
+  datePublished?: string;
+  dateModified?: string;
+  noindex?: boolean;
+  lang?: string;
+  dir?: string;
+  hreflang?: string;
+}
+
+const {
+  title,
+  description = "Dinweys Biotech is a dedicated global sales and export division for qualified feed additive manufacturers in China, specializing in choline chloride, betaine, dicalcium phosphate, amino acids, and vitamins for poultry, swine, ruminant, and aquaculture feed.",
+  canonical,
+  ogType = "website",
+  ogImage = "/images/uploads/2025/08/cropped-cropped-logo3.png",
+  jsonLd,
+  author,
+  datePublished,
+  dateModified,
+  noindex = false,
+  lang = "en",
+  dir = "ltr",
+  hreflang,
+} = Astro.props;
+
+const SITE = "https://cholinebio.com";
+const BRAND = "Dinweys Biotech";
+const BRAND_SHORT = "Dinweys Biotech";
+
+const cleanTitle = title.replace(/\u200b/gi, "").trim();
+const hasBrand = cleanTitle.toUpperCase().includes("DINWEYS") || cleanTitle.toLowerCase().includes("dinweys");
+const baseTitle = cleanTitle || BRAND;
+const fullTitle = hasBrand ? baseTitle : `${baseTitle} – ${BRAND_SHORT}`;
+
+const canonicalUrl = canonical
+  ? (canonical.startsWith("http") ? canonical : SITE + canonical)
+  : SITE + Astro.url.pathname;
+
+const jsonLdArray = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
+
+const articleJsonLd =
+  ogType === "article"
+    ? {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        headline: cleanTitle,
+        description,
+        image: ogImage.startsWith("http") ? ogImage : SITE + ogImage,
+        author: author
+          ? { "@type": "Person", name: author }
+          : { "@type": "Organization", name: BRAND },
+        publisher: { "@id": SITE + "/#organization" },
+        datePublished,
+        dateModified: dateModified || datePublished,
+        mainEntityOfPage: { "@type": "WebPage", "@id": canonicalUrl }
+      }
+    : null;
+
+const productJsonLd =
+  ogType === "product"
+    ? {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        name: cleanTitle,
+        description,
+        image: ogImage.startsWith("http") ? ogImage : SITE + ogImage,
+        brand: { "@type": "Brand", name: BRAND_SHORT },
+        manufacturer: { "@id": SITE + "/#organization" },
+        additionalType: "https://schema.org/Product"
+      }
+    : null;
+
+const orgJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": SITE + "/#organization",
+  name: BRAND,
+  url: SITE,
+  logo: SITE + "/images/uploads/2025/08/cropped-cropped-logo3.png"
+};
+
+const allJsonLd = [
+  ...(ogType === "article" && articleJsonLd ? [articleJsonLd] : []),
+  ...(ogType === "product" && productJsonLd ? [productJsonLd] : []),
+  orgJsonLd,
+  ...jsonLdArray
+];
+
+const hreflangTags = hreflang ? String(hreflang) : "";
+---
+
+<!doctype html>
+<html lang={lang} dir={dir}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+    <title>{fullTitle}</title>
+    {description && <meta name="description" content={description} />}
+    <link rel="canonical" href={canonicalUrl} />
+    {noindex && <meta name="robots" content="noindex,nofollow" />}
+
+    <!-- Open Graph -->
+    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={fullTitle} />
+    {description && <meta property="og:description" content={description} />}
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:site_name" content={BRAND} />
+    {ogImage && <meta property="og:image" content={ogImage.startsWith("http") ? ogImage : SITE + ogImage} />}
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content={ogType === "article" ? "summary_large_image" : "summary"} />
+    <meta name="twitter:title" content={fullTitle} />
+    {description && <meta name="twitter:description" content={description} />}
+    {ogImage && <meta name="twitter:image" content={ogImage.startsWith("http") ? ogImage : SITE + ogImage} />}
+
+    {articleJsonLd && <script type="application/ld+json" set:html={JSON.stringify(articleJsonLd)} />}
+    {productJsonLd && <script type="application/ld+json" set:html={JSON.stringify(productJsonLd)} />}
+    <script type="application/ld+json" set:html={JSON.stringify(orgJsonLd)} />
+    {jsonLdArray.map((ld) => (
+      <script type="application/ld+json" set:html={JSON.stringify(ld)} />
+    ))}
+
+    {hreflangTags === "" ? null : <Fragment set:html={hreflangTags} />}
+  </head>
+  <body>
+    <Header lang={lang} />
+    <main>
+      <slot />
+    </main>
+    <Footer lang={lang} />
+  </body>
+</html>

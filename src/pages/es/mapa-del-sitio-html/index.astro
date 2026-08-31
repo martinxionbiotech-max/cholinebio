@@ -1,0 +1,15 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+
+const page = {
+  title: "Mapa del sitio en HTML",
+  h1: "Mapa del sitio en HTML",
+};
+const hreflang = "<link rel='alternate' hreflang='en' href='https://cholinebio.com/html-sitemap/'/><link rel='alternate' hreflang='x-default' href='https://cholinebio.com/html-sitemap/'/><link rel='alternate' hreflang='ar' href='https://cholinebio.com/ar/%d8%ae%d8%b1%d9%8a%d8%b7%d8%a9-%d9%85%d9%88%d9%82%d8%b9-html/'/><link rel='alternate' hreflang='fr' href='https://cholinebio.com/fr/plan-du-site-html/'/><link rel='alternate' hreflang='tr' href='https://cholinebio.com/tr/html-site-haritasi/'/><link rel='alternate' hreflang='es' href='https://cholinebio.com/es/mapa-del-sitio-html/'/><link rel='alternate' hreflang='de' href='https://cholinebio.com/de/html-sitemap/'/><link rel='alternate' hreflang='zh' href='https://cholinebio.com/zh/html-%e7%bd%91%e7%ab%99%e5%9c%b0%e5%9b%be/'/><link rel='alternate' hreflang='pt' href='https://cholinebio.com/pt/mapa-do-site-em-html/'/>";
+---
+<BaseLayout title={page.title} ogType="website" canonical="/es/mapa-del-sitio-html/" lang="es" hreflang={hreflang}>
+  <article class="page-content">
+    <h1 class="page-title">{page.h1}</h1>
+    <div class="entry-content" set:html={`<header class="entry-header page-title title-align-inherit title-tablet-align-inherit title-mobile-align-inherit"><h1 class="entry-title">Mapa del sitio HTML</h1><nav id="kadence-breadcrumbs" aria-label="Migas de pan"  class="kadence-breadcrumbs" data-no-translation-aria-label=""><div class="kadence-breadcrumb-container"><span><a href="/es/" itemprop="url" class="kadence-bc-home" ><span data-no-translation="" data-trp-gettext="">Inicio</span></a></span> <span class="bc-delimiter">/</span> <span class="kadence-bread-current">Mapa del sitio HTML</span></div></nav></header><div class="entry-content single-content"></div>`} />
+  </article>
+</BaseLayout>

@@ -1,0 +1,70 @@
+---
+interface Props {
+  lang?: string;
+}
+const { lang = "en" } = Astro.props;
+---
+
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <div class="footer-disclaimer">
+      <p>
+        Disclaimer: All products presented on this website are feed-grade additives intended
+        exclusively for animal nutrition. They are not suitable for human consumption, food
+        processing, or pharmaceutical applications. Please contact us separately if food- or
+        pharma-grade materials are required.
+      </p>
+    </div>
+    <nav class="footer-nav" aria-label="Footer">
+      <a href="/">HOME</a>
+      <a href="/about/">About</a>
+      <a href="/privacy-policy/">Privacy Policy</a>
+      <a href="/terms-and-conditions/">Terms and Conditions</a>
+      <a href="/contact/">Contact</a>
+      <a href="/faq/">FAQ</a>
+      <a href="/html-sitemap/">SiteMap</a>
+    </nav>
+    <div class="footer-copy">
+      <p>&copy; 2026 Dinweys Biotech – Feed Additives Export &amp; Global Distribution</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+.site-footer {
+  background: #f7fafc;
+  border-top: 1px solid #e2e8ee;
+  margin-top: 3rem;
+  padding: 2.5rem 1.5rem;
+}
+.site-footer-inner {
+  max-width: 1290px;
+  margin: 0 auto;
+}
+.footer-disclaimer p {
+  font-size: 0.85rem;
+  color: #63676f;
+  line-height: 1.6;
+  max-width: 900px;
+}
+.footer-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 1.75rem;
+  margin: 1.5rem 0;
+}
+.footer-nav a {
+  font-size: 0.9rem;
+  color: #143852;
+  text-decoration: none;
+  font-weight: 500;
+}
+.footer-nav a:hover {
+  color: #0b63a9;
+}
+.footer-copy p {
+  font-size: 0.85rem;
+  color: #63676f;
+  margin: 0;
+}
+</style>
