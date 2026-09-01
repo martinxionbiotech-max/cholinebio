@@ -1,100 +1,111 @@
 ---
-interface Props {
-  lang?: string;
-}
-const { lang = "en" } = Astro.props;
+const currentLang = Astro.url.pathname.split("/")[1];
+const LANG_CODES = ["ar", "fr", "tr", "es", "de", "zh", "pt"];
+const isLangPage = LANG_CODES.includes(currentLang);
+const prefix = isLangPage ? `/${currentLang}` : "";
 
-const navItems = [
-  { label: "HOME", href: "/" },
-  { label: "About", href: "/about/" },
-  { label: "Products", href: "/product/" },
-  { label: "SERVICE", href: "/services/" },
-  { label: "Blog", href: "/blog/" },
-  { label: "Contact", href: "/contact/" },
+const languages = [
+  { code: "en", name: "English", flag: "🇬🇧" },
+  { code: "ar", name: "العربية", flag: "🇸🇦" },
+  { code: "fr", name: "Français", flag: "🇫🇷" },
+  { code: "tr", name: "Türkçe", flag: "🇹🇷" },
+  { code: "es", name: "Español", flag: "🇪🇸" },
+  { code: "de", name: "Deutsch", flag: "🇩🇪" },
+  { code: "zh", name: "中文", flag: "🇨🇳" },
+  { code: "pt", name: "Português", flag: "🇵🇹" },
 ];
 
-const isActive = (href: string) => {
-  const path = Astro.url.pathname;
-  if (href === "/") return path === "/";
-  return path.startsWith(href);
+// 导航项（slug 保持英文，多语言不本地化）
+const NAV = [
+  { label: "Home", href: "/", key: "home" },
+  { label: "About", href: "/about/", key: "about" },
+  { label: "Products", href: "/product/", key: "product" },
+  { label: "Services", href: "/services/", key: "services" },
+  { label: "Blog", href: "/blog/", key: "blog" },
+  { label: "Contact", href: "/contact/", key: "contact" },
+];
+
+// 导航项的本地化标签
+const NAV_LABELS: Record<string, Record<string, string>> = {
+  ar: { "home": "الرئيسية", "about": "من نحن", "product": "منتجاتنا", "services": "خدماتنا", "blog": "المدونة", "contact": "اتصل بنا" },
+  fr: { "home": "Accueil", "about": "À propos", "product": "Produits", "services": "Services", "blog": "Blog", "contact": "Contact" },
+  tr: { "home": "Ana Sayfa", "about": "Hakkımızda", "product": "Ürünler", "services": "Hizmetler", "blog": "Blog", "contact": "İletişim" },
+  es: { "home": "Inicio", "about": "Nosotros", "product": "Productos", "services": "Servicios", "blog": "Blog", "contact": "Contacto" },
+  de: { "home": "Startseite", "about": "Über uns", "product": "Produkte", "services": "Leistungen", "blog": "Blog", "contact": "Kontakt" },
+  zh: { "home": "首页", "about": "关于我们", "product": "产品", "services": "服务", "blog": "博客", "contact": "联系我们" },
+  pt: { "home": "Início", "about": "Sobre nós", "product": "Produtos", "services": "Serviços", "blog": "Blog", "contact": "Contato" },
+};
+
+// 当前页 slug（用于语言切换时保持路径）
+const pathParts = Astro.url.pathname.split("/").filter(Boolean);
+const currentSlug = isLangPage ? pathParts.slice(1).join("/") : pathParts.join("/");
+
+const langForLink = (code: string) => {
+  if (code === "en") return currentSlug ? `/${currentSlug}/` : "/";
+  return currentSlug ? `/${code}/${currentSlug}/` : `/${code}/`;
+};
+
+// 生成导航链接（slug 保持英文，但标签本地化）
+const navHref = (key: string) => {
+  if (key === "home") return `${prefix}/`;
+  return `${prefix}/${key}/`;
+};
+const navLabel = (key: string, label: string) => {
+  return isLangPage ? (NAV_LABELS[currentLang]?.[key] ?? label) : label;
 };
 ---
 
 <header class="site-header">
-  <div class="site-header-inner">
-    <a class="brand" href="/" rel="home">
-      <img
-        src="/images/uploads/2025/08/cropped-cropped-logo3.png"
-        alt="Dinweys Biotech logo"
-        width="512"
-        height="205"
-        class="brand-logo"
-      />
+  <div class="container header-inner">
+    <a class="brand" href={`${prefix}/`}>
+      <span class="dot"></span>
+      <span>Dinweys Biotech</span>
     </a>
-    <nav class="main-nav" role="navigation" aria-label="Primary">
-      <ul class="primary-menu">
-        {navItems.map((item) => (
-          <li>
-            <a href={item.href} class={isActive(item.href) ? "active" : ""}>
-              {item.label}
-            </a>
-          </li>
-        ))}
-      </ul>
+
+    <nav class="site-nav" aria-label="Primary">
+      {NAV.map((item) => (
+        <a
+          href={navHref(item.key)}
+          class={Astro.url.pathname.replace(/\/+$/, "").endsWith(item.key) || (item.key === "home" && Astro.url.pathname === `${prefix}/`) ? "active" : undefined}
+        >
+          {navLabel(item.key, item.label)}
+        </a>
+      ))}
     </nav>
+
+    <div class="lang-switch">
+      <details class="nav-drop">
+        <summary>{languages.find((l) => l.code === (isLangPage ? currentLang : "en"))?.flag ?? "🌐"}</summary>
+        <div class="nav-drop-menu">
+          {languages.map((l) => (
+            <a href={langForLink(l.code)}>{l.flag} {l.name}</a>
+          ))}
+        </div>
+      </details>
+      <a class="header-cta" href={`${prefix}/contact/`}>{isLangPage ? "询价" : "Get a Quote"}</a>
+    </div>
   </div>
 </header>
 
 <style>
-.site-header {
-  background: #fff;
-  border-bottom: 1px solid #e2e8ee;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-.site-header-inner {
-  max-width: 1290px;
-  margin: 0 auto;
-  padding: 0.5rem 1.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-}
-.brand-logo {
-  height: 48px;
-  width: auto;
-  display: block;
-}
-.main-nav ul.primary-menu {
-  display: flex;
-  gap: 1.75rem;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-.main-nav a {
-  font-family: "Lora", serif;
-  font-size: 0.95rem;
-  color: #143852;
-  text-decoration: none;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  transition: color 0.2s;
-}
-.main-nav a:hover,
-.main-nav a.active {
-  color: #0b63a9;
-}
-@media (max-width: 768px) {
-  .site-header-inner {
-    flex-direction: column;
-    align-items: flex-start;
+  .lang-switch { gap: 0.8rem; }
+  .nav-drop { position: relative; }
+  .nav-drop summary {
+    list-style: none; cursor: pointer;
+    font-size: 1.15rem; display: flex; align-items: center;
   }
-  .main-nav ul.primary-menu {
-    flex-wrap: wrap;
-    gap: 0.75rem 1.25rem;
+  .nav-drop summary::-webkit-details-marker { display: none; }
+  .nav-drop-menu {
+    position: absolute; right: 0; top: calc(100% + 0.6rem);
+    background: #fff; border: 1px solid var(--border);
+    border-radius: var(--radius-sm); box-shadow: var(--shadow-lg);
+    padding: 0.4rem; min-width: 160px; z-index: 200;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0.1rem;
   }
-}
+  .nav-drop-menu a {
+    display: block; padding: 0.4rem 0.6rem;
+    color: var(--ink-soft); font-size: 0.85rem; border-radius: 6px;
+  }
+  .nav-drop-menu a:hover { background: var(--bg-alt); color: var(--primary); text-decoration: none; }
+  .header-cta { margin-left: 0.2rem; }
 </style>

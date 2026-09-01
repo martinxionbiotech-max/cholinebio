@@ -3,21 +3,38 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 
 const page = {
   title: "Blog",
-  h1: "Blog",
 };
 const hreflang = "<link rel='alternate' hreflang='en' href='https://cholinebio.com/blog/'/><link rel='alternate' hreflang='x-default' href='https://cholinebio.com/blog/'/><link rel='alternate' hreflang='ar' href='https://cholinebio.com/ar/%d8%a7%d9%84%d9%85%d8%af%d9%88%d9%86%d8%a9/'/><link rel='alternate' hreflang='fr' href='https://cholinebio.com/fr/blog/'/><link rel='alternate' hreflang='tr' href='https://cholinebio.com/tr/blog/'/><link rel='alternate' hreflang='es' href='https://cholinebio.com/es/blog/'/><link rel='alternate' hreflang='de' href='https://cholinebio.com/de/blog/'/><link rel='alternate' hreflang='zh' href='https://cholinebio.com/zh/%e5%8d%9a%e5%ae%a2/'/><link rel='alternate' hreflang='pt' href='https://cholinebio.com/pt/blog/'/>";
----
-<BaseLayout title={page.title} ogType="website" description="What is Dicalcium Phosphate (DCP)? It is a versatile calcium-phosphorus source widely used in animal feed. Its balanced composition, safety, and…" canonical="/blog/" hreflang={hreflang}>
-  <article class="page-content">
-    <h1 class="page-title">{page.h1}</h1>
-    <div class="entry-content" set:html={`<header class="entry-header"><div class="entry-taxonomies">
-<span class="category-links term-links category-style-normal">
-<a href="/category/feed-additives/" class="category-link-feed-additives" rel="tag">Feed Additives</a>			</span></div><h2 class="entry-title"><a href="/what-is-dicalcium-phosphate/" rel="bookmark">What is Dicalcium Phosphate? Most Complete Information You Must Need</a></h2><div class="entry-meta entry-meta-divider-dot">
-<span class="posted-by"><span class="meta-label">By</span><span class="author vcard"><a class="url fn n" href="">martin2024</a></span></span>					<span class="posted-on">
-<time class="entry-date published" datetime="2025-09-15T08:18:42+00:00" itemprop="datePublished">September 15, 2025</time><time class="updated" datetime="2026-07-22T12:16:56+00:00" itemprop="dateModified">July 22, 2026</time>					</span></div></header><div class="entry-summary"><p>What is Dicalcium Phosphate (DCP)? It is a versatile calcium-phosphorus source widely used in animal feed. Its balanced composition, safety, and&#8230;</p></div><footer class="entry-footer"><div class="entry-actions"><p class="more-link-wrap">
-<a href="/what-is-dicalcium-phosphate/" class="post-more-link">
-Read More<span class="screen-reader-text"> What is Dicalcium Phosphate? Most Complete Information You Must Need</span><span class="kadence-svg-iconset svg-baseline"><svg aria-hidden="true" class="kadence-svg-icon kadence-arrow-right-alt-svg" fill="currentColor" version="1.1" xmlns="http://www.w3.org/2000/svg" width="27" height="28" viewBox="0 0 27 28"><title>Continue</title><path d="M27 13.953c0 0.141-0.063 0.281-0.156 0.375l-6 5.531c-0.156 0.141-0.359 0.172-0.547 0.094-0.172-0.078-0.297-0.25-0.297-0.453v-3.5h-19.5c-0.281 0-0.5-0.219-0.5-0.5v-3c0-0.281 0.219-0.5 0.5-0.5h19.5v-3.5c0-0.203 0.109-0.375 0.297-0.453s0.391-0.047 0.547 0.078l6 5.469c0.094 0.094 0.156 0.219 0.156 0.359v0z"></path>
-</svg></span>			</a></p></div></footer>`} />
-  </article>
 
+const posts = [
+  { title: "What is Choline Chloride? How is the China Made？", href: "/what-is-choline-chloride-china-manufacturing-guide/" },
+  { title: "Feed Additives Classification", href: "/feed-additives-classification/" },
+  { title: "Choline Chloride Feed: 5 Key Things You Must Know Before Buying", href: "/choline-chloride-feed-5-keys-you-must-know/" },
+  { title: "Choline and Inositol: in Animal Feed Additives", href: "/choline-and-inositol/" },
+  { title: "Choline Chloride in Poultry Feed – Things You Need to Know!", href: "/choline-chloride-in-poultry-feed/" },
+  { title: "Choline Chloride in Cat Food: Essential Functions, Benefits, and Comparison with Dog Nutrition", href: "/choline-chloride-in-cat-food/" },
+  { title: "Choline Chloride in Dog Food: Functions, Benefits, and Considerations", href: "/choline-chloride-in-dog-food/" },
+  { title: "What is Dicalcium Phosphate? Most Complete Information You Must Need", href: "/what-is-dicalcium-phosphate/" },
+  { title: "What Are Phytogenic Feed Additives? Choline Chloride Comparison", href: "/what-are-phytogenic-feed-additives/" },
+  { title: "2025 China Choline Chloride Price per Ton: Market Trends & Forecast", href: "/2025-china-choline-chloride-price-per-ton/" },
+];
+---
+
+<BaseLayout title={page.title} hreflang={hreflang} description="Feed additive industry insights — choline chloride, dicalcium phosphate, vitamins, amino acids, and practical sourcing guidance for animal nutrition." canonical="/blog/">
+  <div class="container section">
+    <span class="kicker">Blog</span>
+    <h1 class="sec-title">Feed Additive Industry Insights</h1>
+    <p class="sec-sub">Practical guides and technical articles on choline chloride, dicalcium phosphate, vitamins, and amino acids for animal nutrition.</p>
+
+    <div class="card-grid">
+      {posts.map((post) => (
+        <div class="card plain">
+          <div class="body">
+            <h3><a href={post.href}>{post.title}</a></h3>
+            <a class="link" href={post.href}>Read article →</a>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
 </BaseLayout>

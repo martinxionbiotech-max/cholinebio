@@ -1,0 +1,69 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+
+interface Props {
+  title: string;
+  description?: string;
+  canonical?: string;
+  author?: string;
+  date?: string;
+  ogImage?: string;
+  bodyHtml: string;
+  breadcrumbLabel?: string;
+  hreflang?: string;
+}
+
+const {
+  title,
+  description,
+  canonical,
+  author = "Dinweys Biotech Team",
+  date,
+  ogImage,
+  bodyHtml,
+  breadcrumbLabel = "Blog",
+  hreflang,
+} = Astro.props;
+
+const fmtDate = date
+  ? new Date(date).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })
+  : null;
+
+const initial = (author || "D").trim().charAt(0).toUpperCase();
+---
+
+<BaseLayout title={title} hreflang={hreflang} description={description} canonical={canonical} ogType="article" ogImage={ogImage} author={author} datePublished={date} dateModified={date}>
+  <div class="container article-shell">
+    <nav class="crumblist" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span aria-hidden="true">›</span>
+      <a href="/blog/">Blog</a>
+      <span aria-hidden="true">›</span>
+      <span class="crumb-current">{title}</span>
+    </nav>
+
+    <article class="post">
+      <header class="article-header">
+        <h1 class="article-title">{title}</h1>
+        <div class="article-meta">
+          <span class="ava">{initial}</span>
+          <span>By <strong>{author}</strong></span>
+          {fmtDate && (
+            <>
+              <span aria-hidden="true">·</span>
+              <span>{fmtDate}</span>
+            </>
+          )}
+        </div>
+      </header>
+
+      <div class="article-body" set:html={bodyHtml} />
+
+      <footer class="article-cta">
+        <h3>Looking for feed-grade choline chloride, betaine, or dicalcium phosphate?</h3>
+        <p>Talk to our team for product specs, COA, and tailored bulk quotations.</p>
+        <a class="btn" href="/contact/">Get a Quote</a>
+      </footer>
+    </article>
+  </div>
+</BaseLayout>

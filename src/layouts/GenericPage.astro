@@ -1,0 +1,23 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+
+interface Props {
+  title: string;
+  description?: string;
+  canonical?: string;
+  ogImage?: string;
+  bodyHtml: string;
+  hreflang?: string;
+}
+
+const { title, description, canonical, ogImage, bodyHtml, hreflang } = Astro.props;
+---
+
+<BaseLayout title={title} hreflang={hreflang} description={description} canonical={canonical} ogType="website" ogImage={ogImage}>
+  <div class="container article-shell">
+    <div class="article-header">
+      <h1 class="article-title">{title}</h1>
+    </div>
+    <div class="article-body" set:html={bodyHtml} />
+  </div>
+</BaseLayout>

@@ -1,0 +1,68 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+
+interface Props {
+  title: string;
+  description?: string;
+  canonical?: string;
+  ogImage?: string;
+  gallery?: string[];
+  category?: string;
+  descriptionHtml?: string;
+  hreflang?: string;
+}
+
+const {
+  title,
+  description,
+  canonical,
+  ogImage,
+  gallery = [],
+  category = "",
+  descriptionHtml = "",
+  hreflang,
+} = Astro.props;
+
+const mainImage = gallery[0] || ogImage;
+---
+
+<BaseLayout title={title} hreflang={hreflang} description={description} canonical={canonical} ogType="product" ogImage={mainImage}>
+  <div class="container product-shell">
+    <nav class="crumblist" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span aria-hidden="true">›</span>
+      <a href="/product/">Products</a>
+      <span aria-hidden="true">›</span>
+      <span class="crumb-current">{title}</span>
+    </nav>
+
+    <div class="product-grid">
+      <div class="product-gallery">
+        <div class="g-main">
+          {mainImage ? (
+            <img src={mainImage} alt={title} width="600" height="600" loading="eager" />
+          ) : (
+            <div class="g-placeholder">No image</div>
+          )}
+        </div>
+      </div>
+
+      <div class="product-info">
+        {category && <span class="product-cat">{category}</span>}
+        <h1 class="product-title">{title}</h1>
+        <div class="product-desc" set:html={descriptionHtml} />
+        <div class="product-cta">
+          <a class="btn" href="/contact/">Request a Quote</a>
+          <a class="btn outline" href="/product/">Browse All Products</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .g-placeholder {
+    color: var(--ink-muted); font-size: 0.9rem;
+    display: flex; align-items: center; justify-content: center; height: 100%;
+  }
+</style>
