@@ -191,6 +191,15 @@ h2.sec-title { font-size: clamp(1.6rem, 3vw, 2.2rem); line-height: 1.2; margin-t
 /* text-only card (no thumb) */
 .card.plain { padding: 1.5rem 1.4rem; }
 
+/* certificate card (真实证书扫描图) */
+.cert-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
+.cert-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 1.4rem; text-align: center; display: flex; flex-direction: column; align-items: center; }
+.cert-card .cert-img { width: 100%; height: 220px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; }
+.cert-card .cert-img img { max-width: 100%; max-height: 100%; object-fit: contain; }
+.cert-card h3 { margin: 0 0 0.4rem; font-size: 1.05rem; }
+.cert-card p { color: var(--ink-muted); font-size: 0.85rem; margin: 0; }
+@media (max-width: 720px) { .cert-grid { grid-template-columns: 1fr; } }
+
 /* ============ Stats ============ */
 .stats { display: grid; gap: 1.4rem; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); margin-top: 2rem; }
 .stat {
