@@ -10,6 +10,7 @@ interface Props {
   category?: string;
   descriptionHtml?: string;
   hreflang?: string;
+  lang?: string;
 }
 
 const {
@@ -21,12 +22,13 @@ const {
   category = "",
   descriptionHtml = "",
   hreflang,
+  lang = "en",
 } = Astro.props;
 
 const mainImage = gallery[0] || ogImage;
 ---
 
-<BaseLayout title={title} hreflang={hreflang} description={description} canonical={canonical} ogType="product" ogImage={mainImage}>
+<BaseLayout title={title} hreflang={hreflang} lang={lang} description={description} canonical={canonical} ogType="product" ogImage={mainImage}>
   <div class="container product-shell">
     <nav class="crumblist" aria-label="Breadcrumb">
       <a href="/">Home</a>

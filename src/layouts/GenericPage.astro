@@ -8,12 +8,13 @@ interface Props {
   ogImage?: string;
   bodyHtml: string;
   hreflang?: string;
+  lang?: string;
 }
 
-const { title, description, canonical, ogImage, bodyHtml, hreflang } = Astro.props;
+const { title, description, canonical, ogImage, bodyHtml, hreflang, lang = "en" } = Astro.props;
 ---
 
-<BaseLayout title={title} hreflang={hreflang} description={description} canonical={canonical} ogType="website" ogImage={ogImage}>
+<BaseLayout title={title} hreflang={hreflang} lang={lang} description={description} canonical={canonical} ogType="website" ogImage={ogImage}>
   <div class="container article-shell">
     <div class="article-header">
       <h1 class="article-title">{title}</h1>

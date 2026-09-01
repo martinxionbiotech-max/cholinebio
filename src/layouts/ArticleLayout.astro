@@ -11,6 +11,7 @@ interface Props {
   bodyHtml: string;
   breadcrumbLabel?: string;
   hreflang?: string;
+  lang?: string;
 }
 
 const {
@@ -23,6 +24,7 @@ const {
   bodyHtml,
   breadcrumbLabel = "Blog",
   hreflang,
+  lang = "en",
 } = Astro.props;
 
 const fmtDate = date
@@ -32,7 +34,7 @@ const fmtDate = date
 const initial = (author || "D").trim().charAt(0).toUpperCase();
 ---
 
-<BaseLayout title={title} hreflang={hreflang} description={description} canonical={canonical} ogType="article" ogImage={ogImage} author={author} datePublished={date} dateModified={date}>
+<BaseLayout title={title} hreflang={hreflang} lang={lang} description={description} canonical={canonical} ogType="article" ogImage={ogImage} author={author} datePublished={date} dateModified={date}>
   <div class="container article-shell">
     <nav class="crumblist" aria-label="Breadcrumb">
       <a href="/">Home</a>
