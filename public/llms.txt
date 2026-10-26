@@ -1,0 +1,25 @@
+# CholineBio — cholinebio.com
+
+> Choline chloride supplier and technical reference site: feed-grade choline chloride for poultry, swine, aquaculture and companion animals, plus application guides and market price notes.
+
+## Products and applications
+- [Choline Chloride](https://cholinebio.com/choline-chloride/): Feed-grade product overview and specifications.
+- [Choline and Inositol](https://cholinebio.com/choline-and-inositol/): The two compounds, compared and combined.
+- [Choline Chloride in Poultry Feed](https://cholinebio.com/choline-chloride-in-poultry-feed/): Inclusion rates and formulation notes.
+- [Choline Chloride in Dog Food](https://cholinebio.com/choline-chloride-in-dog-food/): Companion-animal applications.
+- [Choline Chloride in Cat Food](https://cholinebio.com/choline-chloride-in-cat-food/): Feline formulation notes.
+
+## Reference
+- [FAQ](https://cholinebio.com/faq/): Common questions on grades, dosage and storage.
+- [Feed Additives Classification](https://cholinebio.com/feed-additives-classification/): Where choline chloride sits in feed-additive categories.
+- [China Choline Chloride Price per Ton](https://cholinebio.com/2025-china-choline-chloride-price-per-ton/): Price context for buyers.
+- [Blog](https://cholinebio.com/blog/): Technical and market articles.
+- [About](https://cholinebio.com/about/) · [Contact](https://cholinebio.com/contact/)
+- [HTML Sitemap](https://cholinebio.com/html-sitemap/): Full page index.
+
+## Languages
+English, Arabic, German, Spanish, French — language-prefixed URLs.
+
+## Notes
+- Dosage figures are formulation references, not veterinary advice; confirm with a nutritionist.
+- Prices quoted are indicative and dated; request a current quotation for purchasing.
